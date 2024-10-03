@@ -16,5 +16,8 @@ Following is an example of some of plugin files in this directory. Other files a
 | log_jq.yml         | View resource logs using jq                                      | pods                     | Ctrl-j   | kubectl-plugins/kubectl-jq                                                            |
 | log_full.yml       | get full logs from pod/container                                 | pods/containers          | Ctrl-l   |                                                                                       |
 | ai-incident-investigation.yaml | Run AI investigation on application issues to find the root cause in seconds | all | Shift-h/o | [HolmesGPT](https://github.com/robusta-dev/holmesgpt) |
+
+Files can be combined into one config file with `yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' flux.yaml log-full.yaml >~/.config/k9s/plugins.yaml`.
+
 [1]: https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container
 [2]: https://github.com/nicolaka/netshoot

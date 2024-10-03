@@ -57,12 +57,12 @@ plugins:
         | less -K
   reconcile-hr:
     shortCut: Shift-R
-    confirm: false
+    confirm: true
     description: Flux reconcile
     scopes:
       - helmreleases
     command: bash
-    background: false
+    background: true
     args:
       - -c
       - >-
@@ -70,9 +70,9 @@ plugins:
         reconcile helmrelease
         --context $CONTEXT
         -n $NAMESPACE $NAME
-        | less -K
+        --with-source
   reconcile-helm-repo:
-    shortCut: Shift-Z
+    shortCut: Shift-R
     description: Flux reconcile
     scopes:
       - helmrepositories
@@ -88,7 +88,7 @@ plugins:
         -n $NAMESPACE $NAME
         | less -K
   reconcile-oci-repo:
-    shortCut: Shift-Z
+    shortCut: Shift-R
     description: Flux reconcile
     scopes:
       - ocirepositories
@@ -105,12 +105,12 @@ plugins:
         | less -K
   reconcile-ks:
     shortCut: Shift-R
-    confirm: false
+    confirm: true
     description: Flux reconcile
     scopes:
       - kustomizations
     command: bash
-    background: false
+    background: true
     args:
       - -c
       - >-
@@ -118,7 +118,7 @@ plugins:
         reconcile kustomization
         --context $CONTEXT
         -n $NAMESPACE $NAME
-        | less -K
+        --with-source
   reconcile-ir:
     shortCut: Shift-R
     confirm: false
@@ -152,7 +152,7 @@ plugins:
         -n $NAMESPACE $NAME
         | less -K
   trace:
-    shortCut: Shift-A
+    shortCut: Shift-Y
     confirm: false
     description: Flux trace
     scopes:
@@ -162,13 +162,10 @@ plugins:
     args:
       - -c
       - >-
-        resource=$(echo $RESOURCE_NAME | sed -E 's/ies$/y/' | sed -E 's/ses$/se/' | sed -E 's/(s|es)$//g')
         flux
         trace
         --context $CONTEXT
-        --kind $resource
-        --api-version $RESOURCE_GROUP/$RESOURCE_VERSION
-        --namespace $NAMESPACE $NAME
+        -n $NAMESPACE $RESOURCE_NAME $NAME
         | less -K
   # credits: https://github.com/fluxcd/flux2/discussions/2494
   get-suspended-helmreleases:
